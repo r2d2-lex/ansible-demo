@@ -1,0 +1,14 @@
+ansible -i hosts.ini -m ping demo
+ansible-doc -l - список модулей
+ansible-doc community.docker.docker_config - информация по конкретному модулю
+
+AD-hoc команды:
+ansible -i hosts.ini -m user -a "name=superuser state=present" demo - пример проверки пользователя на существование
+ansible -i hosts.ini -m user -a "name=superuser state=present" demo
+ansible -i hosts.ini -m user -a "name=superuser state=present" -b -K demo - создание пользователя
+ansible -i hosts.ini -m user -a "name=superuser state=absent" -b demo - удаление пользователя
+
+ansible -i hosts.ini -m user -a "name=superuser state=present" -e "ansible_become=true ansible_become_password=123" demo
+____________
+
+ansible-playbook -i hosts.ini user.yml -K
