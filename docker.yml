@@ -52,3 +52,20 @@
             name: docker
             state: restarted
             enabled: yes
+
+    - name: Завершение установки
+      become: yes
+      block:
+        - name: Добавление пользователя в группу Docker
+          user:
+            name: "{{ansible_user}}"
+            groups: "{{ansible_user}}, docker"
+            append: yes
+          register: out
+
+        - name: Debug
+          debug:
+            var: out
+
+#        - name: Перезагрузка
+#          reboot:
