@@ -11,4 +11,5 @@ ansible -i hosts.ini -m user -a "name=superuser state=absent" -b demo - удал
 ansible -i hosts.ini -m user -a "name=superuser state=present" -e "ansible_become=true ansible_become_password=123" demo
 ____________
 
-ansible-playbook -i hosts.ini user.yml -K
+Установка docker из playbook docker.yml
+ansible-playbook -i hosts.ini docker.yml
