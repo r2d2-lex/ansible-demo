@@ -1,0 +1,43 @@
+---
+- name: Preconfig
+  hosts: demo
+  tasks:
+    - name: Установка Docker
+      become: yes
+      block:
+
+        - name: Install ca-certificates + curl
+          apt:
+            update_cache: true
+            cache_valid_time: 3600
+            pkg:
+              - ca-certificates
+              - curl
+          register: out
+
+        - name: Debug
+          debug:
+            var: out
+
+        - name: List files in the current directory
+          shell: install -m 0755 -d /etc/apt/keyrings
+
+        - name: Curl docker keyrings
+          shell: curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+
+        - name: Curl docker keyrings2
+          shell: chmod a+r /etc/apt/keyrings/docker.asc
+
+        - name: KR
+          shell: echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+        - name: Install DOCKER
+          apt:
+            update_cache: true
+            cache_valid_time: 3600
+            pkg:
+              - docker-ce
+              - docker-ce-cli
+              - containerd.io
+              - docker-buildx-plugin
+              - docker-compose-plugin
