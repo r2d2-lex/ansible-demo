@@ -13,3 +13,30 @@ ____________
 
 Установка docker из playbook docker.yml
 ansible-playbook -i hosts.ini docker.yml
+
+DOCKER Swarm
+____________
+
+docker node ls
+docker node rm nodeuid
+docker node ls
+docker node inspect machine3
+docker node inspect machine3 --pretty
+
+DOCKER Service:
+____________
+
+docker service create --name redis redis
+docker service ps
+docker service inspect redis --pretty
+docker service scale redis=2  -запуск двух реплик Redis
+docker service logs redis
+docker service update redis --image=redis:3.0.2 -обновляем image сервиса
+
+docker service create --secret my_pass --name redis redis
+docker service inspect my_pass
+docker service rm redis
+docker secret rm my_pass
+
+echo '3331111 | 'docker config create my_conf -
+docker config inspect my_conf
