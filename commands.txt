@@ -40,3 +40,11 @@ docker secret rm my_pass
 
 echo '3331111 | 'docker config create my_conf -
 docker config inspect my_conf
+
+docker node update server1 --label-add registry=true - Добаляем Label для Server1
+docker node inspect server1
+
+Создание сервиса Registry:
+docker service create --name registry --publish 5000:5000 --constraint node.labels.registry==true --mount 'type=bind,source=/root/registry,destination=/var/lib/registry' -e REGISTRY_HTTP_ADDR=0.0.0.0:5000 registry:latest
+docker push 127.0.0.1:5000/node
+docker push 127.0.0.1:5000/node
