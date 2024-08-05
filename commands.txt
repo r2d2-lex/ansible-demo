@@ -48,6 +48,9 @@ docker node inspect server1
 docker service create --name registry --publish 5000:5000 --constraint node.labels.registry==true --mount 'type=bind,source=/root/registry,destination=/var/lib/registry' -e REGISTRY_HTTP_ADDR=0.0.0.0:5000 registry:latest
 docker push 127.0.0.1:5000/node
 docker push 127.0.0.1:5000/node
+
+curl -X GET http://127.0.0.1:5000/v2/_catalog - просмотр содержимого локального registry
+
 docker service create --publish 30022:22 --name nodeX --replicas=3 127.0.0.1:5000/node
 
 Если вы хотите, чтобы сервисы были запущены на этом узле, вы можете обновить сервис, чтобы изменить количество реплик или перезапустить его. Например, вы можете использовать команду:
